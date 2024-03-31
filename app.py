@@ -105,8 +105,8 @@ html_content_1 = """
     <form action="/send_text" method="post">  <!-- 表单，提交到/send_text路径，使用POST方法 -->
         <input type="text" id="text-input" name="text" placeholder="输入队伍名称到此处">  <!-- 文本输入框 -->
         <br>
-        <input type="range" id="repeat-slider" name="repeat" min="1" max="10" value="5" oninput="updateSliderValue(this.value)">  <!-- 滑块 -->
-        <div id="repeat-text">输入动作重复次数: <span id="slider-value">5</span></div>  <!-- 提示文本 -->
+        <input type="range" id="repeat-slider" name="repeat" min="1" max="30" value="20" oninput="updateSliderValue(this.value)">  <!-- 滑块 -->
+        <div id="repeat-text">输入动作重复次数: <span id="slider-value">20</span></div>  <!-- 提示文本 -->
         <button type="submit" id="send-button">开始建队</button>  <!-- 提交按钮 -->
     </form>
     <div class="author">@莫斯菲特</div>  <!-- 添加的作者信息 -->
@@ -133,12 +133,12 @@ def index():
 def send_text():
     text = request.form['text']  # 获取表单中的文本数据
     repeat = int(request.form['repeat'])  # 获取滑块的值，转换为整数
-    clipboard.copy("CreateSquad " + text + " 1")
+    clipboard.copy("CreateSquad " + "$" + text + " 1")
     for _ in range(repeat):  # 根据重复次数执行操作
         pyautogui.press('`')  # 模拟按下键盘上的 '`' 键
         pyautogui.hotkey('ctrl', 'v')
         pyautogui.press('enter')
-        time.sleep(0.1)  # 等待一段时间
+        time.sleep(0.2)  # 等待一段时间
     return html_content_1  # 返回 HTML 内容
 
 # 启动Flask应用的函数
